@@ -15,7 +15,6 @@ export default class Index extends React.Component {
         })
     }
 
-    
     renderSwipers() {
         return this.state.swipers.map(item => (
             <a
