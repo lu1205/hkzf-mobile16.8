@@ -12,7 +12,7 @@ function App() {
             <div className="App">
 
 
-                <Route exact path="/" render={()=><Redirect to="/home" />}></Route>
+                <Route exact path="/" render={() => <Redirect to="/home"/>}></Route>
                 {/* 配置路由 */}
                 <Route path="/home" component={Home}></Route>
                 <Route path="/cityList" component={CityList}></Route>
