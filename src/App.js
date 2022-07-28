@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
 import Home from "./pages/Home";
 import CityList from "./pages/CityList";
+import Map from "./pages/Map";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 {/* 配置路由 */}
                 <Route path="/home" component={Home}></Route>
                 <Route path="/cityList" component={CityList}></Route>
+                <Route path="/map" component={Map}></Route>
             </div>
         </Router>
     )

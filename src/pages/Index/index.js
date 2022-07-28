@@ -1,5 +1,5 @@
 import React from "react";
-import {Carousel, Flex, Grid} from 'antd-mobile';
+import {Carousel, Flex, Grid, WingBlank} from 'antd-mobile';
 import axios from "axios";
 
 import Nav1 from "../../assets/images/nav-1.png"
@@ -8,6 +8,7 @@ import Nav3 from "../../assets/images/nav-3.png"
 import Nav4 from "../../assets/images/nav-4.png"
 
 import "./index.scss"
+import {getCurrentCity} from "../../utils";
 
 const navs = [
     {
@@ -36,11 +37,20 @@ const navs = [
     },
 ]
 
+// 获取地理位置
+navigator.geolocation.getCurrentPosition((position)=>{
+    console.log('当前位置信息：',position)
+})
+
+
+
 export default class Index extends React.Component {
     state = {
         swipers: [],
         isSwiperLoader: false, // 用于解决轮播图不自动播放及高度
         groups: [],
+        news: [],
+        currentCityName: '上海'
     }
 
     async getSwipers() {
@@ -61,7 +71,13 @@ export default class Index extends React.Component {
         this.setState({
             groups: res.data.body
         })
-        console.log(res.data.body)
+    }
+
+    async getNews() {
+        let res = await axios.get(`http://127.0.0.1:8080/home/news?area=AREA%7C88cff55c-aaa4-e2e0`)
+        this.setState({
+            news: res.data.body
+        })
     }
 
     renderSwipers() {
@@ -89,9 +105,40 @@ export default class Index extends React.Component {
         ))
     }
 
-    componentDidMount() {
+    renderNews() {
+        return this.state.news.map(item => (
+            <div className='news-item' key={item.id}>
+                <img src={`http://127.0.0.1:8080${item.imgSrc}`} alt=""/>
+                <div className='item-info'>
+                    <div className='info-title'>{item.title}</div>
+                    <div className='info-desc'>
+                        <div>{item.from}</div>
+                        <div>{item.date}</div>
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+
+    async componentDidMount() {
         this.getSwipers()
         this.getGroups()
+        this.getNews()
+
+        const curCity = await getCurrentCity()
+        this.setState({
+            currentCityName: curCity.label
+        })
+
+/*        const myCity = new window.BMapGL.LocalCity();
+        myCity.get(async (position)=>{
+            console.log('BMap:',position)
+            let res = await axios.get(`http://127.0.0.1:8080/area/info?name=${position.name}`)
+            console.log(1,res)
+            this.setState({
+                currentCityName: res.data.body.label
+            })
+        });*/
     }
 
     render() {
@@ -108,6 +155,30 @@ export default class Index extends React.Component {
                             </Carousel> : ''
                     }
                 </div>
+
+                <Flex className='search-box'>
+                    <Flex className='search'>
+                        <div className='location'
+                             onClick={() => {
+                                 this.props.history.push('/citylist')
+                             }}>
+                            <span className='name'>{this.state.currentCityName}</span>
+                            <i className='iconfont icon-arrow'></i>
+                        </div>
+                        <div className='form'
+                             onClick={() => {
+                                 this.props.history.push('/search')
+                             }}>
+                            <i className='iconfont icon-seach'></i>
+                            <span className='text'>请输入小区或地址</span>
+                        </div>
+                    </Flex>
+                    <i className='iconfont icon-map'
+                       onClick={() => {
+                           this.props.history.push('/map')
+                       }}
+                    />
+                </Flex>
 
                 <Flex className="nav">
                     {this.renderNavs()}
@@ -137,6 +208,14 @@ export default class Index extends React.Component {
                     />
                 </div>
 
+                <div className='news'>
+                    <h3 className="group-title">
+                        最新资讯
+                    </h3>
+                    <WingBlank size='md'>
+                        {this.renderNews()}
+                    </WingBlank>
+                </div>
 
             </div>
         )

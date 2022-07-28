@@ -3,6 +3,8 @@ html, body {
     font-family: "Microsoft YaHei";
     color: #333;
     background: #fff;
+    margin: 0;
+    padding: 0;
 }
 
 * {
@@ -10,7 +12,10 @@ html, body {
     touch-action: pan-y;
 }
 
-h2 {
+h2, p {
     margin: 0;
 }
 
+html, body, #root, .App {
+    height: 100%;
+}
