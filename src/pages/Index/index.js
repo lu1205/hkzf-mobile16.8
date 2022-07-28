@@ -1,5 +1,5 @@
 import React from "react";
-import {Carousel, Flex} from 'antd-mobile';
+import { Carousel, Flex, Grid } from 'antd-mobile';
 import axios from "axios";
 
 import Nav1 from "../../assets/images/nav-1.png"
@@ -45,7 +45,6 @@ export default class Index extends React.Component {
 
     async getSwipers() {
         const res = await axios.get("http://127.0.0.1:8080/home/swiper")
-        console.log(res)
         this.setState({
             swipers: res.data.body,
             isSwiperLoader: true
@@ -53,14 +52,14 @@ export default class Index extends React.Component {
     }
 
     async getGroups() {
-        let res = axios.get(`http://127.0.0.1:8080/home/groups`,
+        let res = await axios.get(`http://127.0.0.1:8080/home/groups`,
             {
                 params: {
                     area: 'AREA%7C88cff55c-aaa4-e2e0'
                 }
             })
         this.setState({
-            groups: res
+            groups: res.data.body
         })
         console.log(res.data.body)
     }
@@ -69,12 +68,12 @@ export default class Index extends React.Component {
         return this.state.swipers.map(item => (<a
             key={item.id}
             href="http://www.alipay.com"
-            style={{display: 'inline-block', width: '100%', height: 212}}
+            style={{ display: 'inline-block', width: '100%', height: 212 }}
         >
             <img
                 src={`http://127.0.0.1:8080${item.imgSrc}`}
                 alt=""
-                style={{width: '100%', verticalAlign: 'top'}}
+                style={{ width: '100%', verticalAlign: 'top' }}
             />
         </a>))
     }
@@ -84,7 +83,7 @@ export default class Index extends React.Component {
             <Flex.Item key={item.id} onClick={() => {
                 this.props.history.push(item.path)
             }}>
-                <img src={item.img} alt=""/>
+                <img src={item.img} alt="" />
                 <h2>{item.title}</h2>
             </Flex.Item>
         ))
@@ -97,30 +96,50 @@ export default class Index extends React.Component {
 
     render() {
         return (<div>
-                <div className='swiper'>
-                    {
-                        this.state.isSwiperLoader ?
-                            <Carousel
-                                autoplay
-                                infinite
-                                autoplayInterval={1000}
-                            >
-                                {this.renderSwipers()}
-                            </Carousel> : ''
-                    }
-                </div>
-
-                <Flex className="nav">
-                    {this.renderNavs()}
-                </Flex>
-
-                <div className="group">
-                    <h3 className="title">
-                        租房小组
-                        <span className="more">更多</span>
-                    </h3>
-                </div>
+            <div className='swiper'>
+                {
+                    this.state.isSwiperLoader ?
+                        <Carousel
+                            autoplay
+                            infinite
+                            autoplayInterval={1000}
+                        >
+                            {this.renderSwipers()}
+                        </Carousel> : ''
+                }
             </div>
+
+            <Flex className="nav">
+                {this.renderNavs()}
+            </Flex>
+
+            <div className="group">
+                <h3 className="group-title">
+                    租房小组
+                    <span className="more">更多</span>
+                </h3>
+
+                <Grid
+                    data={this.state.groups}
+                    columnNum={2}
+                    square={false}
+                    hasLine={false}
+                    activeStyle={false}
+                    renderItem={(item) => (
+                        <Flex className="group-item" justify="around" key={item.id}>
+                            <div className="desc">
+                                <div className="title">{item.title}</div>
+                                <div className="info">{item.desc}</div>
+                            </div>
+                            <img src={`http://127.0.0.1:8080${item.imgSrc}`} alt="" />
+                        </Flex>
+                    )}
+                />
+            </div>
+
+
+            
+        </div>
         )
     }
 }
