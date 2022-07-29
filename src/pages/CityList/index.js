@@ -135,7 +135,6 @@ export default class CityList extends React.Component {
         }
     }
 
-
     render() {
         return (
             <div className='cityList'>
