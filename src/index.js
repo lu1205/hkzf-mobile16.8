@@ -8,4 +8,6 @@ import "./assets/fonts/iconfont.css"
 
 import './index.css'
 
+import 'react-virtualized/styles.css';
+
 ReactDOM.render(<App />, document.getElementById('root'))
