@@ -1,9 +1,12 @@
 import React from "react";
-import {NavBar} from "antd-mobile";
+import {NavBar, Toast} from "antd-mobile";
 import axios from "axios";
-import './index.scss'
+
 import {getCurrentCity} from "../../utils";
 import {List, AutoSizer} from 'react-virtualized';
+import NavHeader from "../../components/NavHeader";
+
+import './index.scss'
 
 // 格式化数据
 const formatCityList = (data) => {
@@ -42,6 +45,7 @@ const formatCityIndex = (letter) => {
 
 const TITLEHEIGHT = 36
 const NAME_HEIGHT = 50
+const HOUSE_CITY = ['北京','深圳','广州','上海']
 
 export default class CityList extends React.Component {
     constructor(props) {
@@ -62,6 +66,16 @@ export default class CityList extends React.Component {
         // 调用 measureAllRows，提前计算 List 中每一行的高度，实现 scrollToRow 的精确跳转
         // 注意：调用这个方法的时候，需要保证List组件已经有数据，不然会报错
         this.cityListComponent.current.measureAllRows()
+    }
+
+    changeCity(city) {
+        let {label, value} = city
+        if (HOUSE_CITY.includes(label)) {
+            localStorage.setItem('hkzf_city', JSON.stringify({label, value}));
+            this.props.history.go(-1);
+        } else {
+            Toast.info('该城市暂无房源数据',1,null,false)
+        }
     }
 
     async getCityList() {
@@ -100,7 +114,7 @@ export default class CityList extends React.Component {
                 <div className='title'>{formatCityIndex(letter)}</div>
                 {
                     cities.map(item => {
-                        return (<div key={item.value} className='name'>{item.label}</div>)
+                        return (<div onClick={()=>this.changeCity(item)} key={item.value} className='name'>{item.label}</div>)
                     })
                 }
             </div>
@@ -139,12 +153,13 @@ export default class CityList extends React.Component {
     render() {
         return (
             <div className='cityList'>
-                <NavBar
+                <NavHeader>城市选择</NavHeader>
+{/*                <NavBar
                     className='navbar'
                     mode="light"
                     icon={<i className='iconfont icon-back'/>}
                     onLeftClick={() => this.props.history.go(-1)}
-                >城市选择</NavBar>
+                >城市选择</NavBar>*/}
                 <AutoSizer>
                     {
                         ({width, height}) => {
@@ -165,7 +180,6 @@ export default class CityList extends React.Component {
                 <ul className='city-index'>
                     {this.renderCityIndex()}
                 </ul>
-
 
             </div>
         )

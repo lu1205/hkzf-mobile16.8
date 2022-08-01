@@ -1,13 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 
 import 'antd-mobile/dist/antd-mobile.css'
 
 import "./assets/fonts/iconfont.css"
 
-import './index.css'
-
 import 'react-virtualized/styles.css';
+
+// 放在最后面，避免样式覆盖
+import App from './App'
+
+import './index.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
