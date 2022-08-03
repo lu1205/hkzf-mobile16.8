@@ -1,5 +1,5 @@
 import React from "react";
-import {NavBar, Toast} from "antd-mobile";
+import {Toast} from "antd-mobile";
 import axios from "axios";
 
 import {getCurrentCity} from "../../utils";
