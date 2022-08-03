@@ -30,7 +30,6 @@ const formatCityList = (data) => {
     }
 }
 
-const list = Array(100).fill("react");
 
 const formatCityIndex = (letter) => {
     switch (letter) {
