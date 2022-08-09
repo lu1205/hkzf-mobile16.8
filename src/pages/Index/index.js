@@ -9,6 +9,7 @@ import Nav4 from "../../assets/images/nav-4.png"
 
 import "./index.scss"
 import {getCurrentCity} from "../../utils";
+import SearchHeader from "../../components/SearchHeader";
 
 const navs = [
     {
@@ -41,8 +42,6 @@ const navs = [
 navigator.geolocation.getCurrentPosition((position)=>{
     console.log('当前位置信息：',position)
 })
-
-
 
 export default class Index extends React.Component {
     state = {
@@ -156,6 +155,9 @@ export default class Index extends React.Component {
                     }
                 </div>
 
+                <SearchHeader cityName={this.state.currentCityName}/>
+
+{/*
                 <Flex className='search-box'>
                     <Flex className='search'>
                         <div className='location'
@@ -179,6 +181,7 @@ export default class Index extends React.Component {
                        }}
                     />
                 </Flex>
+*/}
 
                 <Flex className="nav">
                     {this.renderNavs()}
