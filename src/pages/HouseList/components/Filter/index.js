@@ -94,6 +94,7 @@ export default class Filter extends React.Component {
         } else if (type === 'more' && value.length === 0) {
             newTitleSelectedStatus[type] = false
         }
+
         this.setState({
             openType: '',
             selectedValue: {
