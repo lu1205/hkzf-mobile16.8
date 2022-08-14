@@ -75,17 +75,46 @@ export default class Filter extends React.Component {
     }
 
     onCancel = (type) => {
+        console.log(type)
+        // 设置选中项为默认时，标题不高亮
+        const {titleSelectedStatus,selectedValue} = this.state
+        let newTitleSelectedStatus = {...titleSelectedStatus}
+        let value = selectedValue[type]
+        if (type === 'area' && (value[0] !== 'area' || value.length !== 2)) {
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'mode' && value[0] !== 'null') {
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'price' && value[0] !== 'null') {
+            console.log(123)
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'more' && value.length !== 0) {
+            newTitleSelectedStatus[type] = true
+        } else {
+            newTitleSelectedStatus[type] = false
+        }
         this.setState({
-            openType: ''
+            openType: '',
+            titleSelectedStatus: newTitleSelectedStatus,
         })
     }
 
     onSave = (type, value) => {
-        console.log(type,value)
+        console.log(type, value)
         // 设置选中项为默认时，标题不高亮
         const {titleSelectedStatus} = this.state
         let newTitleSelectedStatus = {...titleSelectedStatus}
-        if (type === 'area' && value[0] === 'area' && value.length === 2) {
+        if (type === 'area' && (value[0] !== 'area' || value.length !== 2)) {
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'mode' && value[0] !== 'null') {
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'price' && value[0] !== 'null') {
+            newTitleSelectedStatus[type] = true
+        } else if (type === 'more' && value.length !== 0) {
+            newTitleSelectedStatus[type] = true
+        } else {
+            newTitleSelectedStatus[type] = false
+        }
+        /*if (type === 'area' && value[0] === 'area' && value.length === 2) {
             newTitleSelectedStatus[type] = false
         } else if (type === 'mode' && value[0] === 'null') {
             newTitleSelectedStatus[type] = false
@@ -93,7 +122,7 @@ export default class Filter extends React.Component {
             newTitleSelectedStatus[type] = false
         } else if (type === 'more' && value.length === 0) {
             newTitleSelectedStatus[type] = false
-        }
+        }*/
 
         this.setState({
             openType: '',
@@ -144,7 +173,7 @@ export default class Filter extends React.Component {
     }
 
     renderFilterMore() {
-        const {openType, filtersData: {characteristic, floor, oriented, roomType}} = this.state
+        const {openType, selectedValue, filtersData: {characteristic, floor, oriented, roomType}} = this.state
         if (openType !== 'more') {
             return null
         }
@@ -155,7 +184,14 @@ export default class Filter extends React.Component {
             oriented,
             roomType
         }
-        return <FilterMore type={openType} data={data} defaultValue={defaultValue} cancelText='清除' onSave={this.onSave}/>
+        return <FilterMore
+            type={openType}
+            data={data}
+            defaultValue={defaultValue}
+            cancelText='清除'
+            onSave={this.onSave}
+            onCancel={this.onCancel}
+        />
     }
 
     render() {
@@ -165,7 +201,7 @@ export default class Filter extends React.Component {
                 {/* 前三个菜单的遮罩层 */}
                 {
                     (openType === 'area' || openType === 'mode' || openType === 'price')
-                        ? <div className={styles.mask} onClick={this.onCancel}></div>
+                        ? <div className={styles.mask} onClick={() => this.onCancel(openType)}></div>
                         : null
                 }
 
