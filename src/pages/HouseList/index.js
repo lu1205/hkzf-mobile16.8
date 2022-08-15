@@ -49,20 +49,20 @@ export default class HouseList extends React.Component {
     }
 
     // 渲染列表项的每一行
-    renderHouseList = ( {key,index,style,}) => {
+    renderHouseList = ({key, index, style,}) => {
         const {list} = this.state
         const house = list[index]
-        console.log('house',house)
+        console.log('house', house)
 
         return (
             <HouseItem
-            key={key}
-            style={style}
-            src={BASE_URL + house.houseImg}
-            title={house.title}
-            desc={house.desc}
-            tags={house.tags}
-            price={house.price}
+                key={key}
+                style={style}
+                src={BASE_URL + house.houseImg}
+                title={house.title}
+                desc={house.desc}
+                tags={house.tags}
+                price={house.price}
             />
         );
     }
