@@ -2,7 +2,7 @@ import React from "react";
 import style from "../../pages/Map/index.module.css";
 import PropTypes from "prop-types";
 
-function HouseItem({src,title, desc, tags, price,onClick}) {
+function HouseItem({src, title, desc, tags, price, onClick}) {
 
     return (
         <div className={style.house} onClick={onClick}>
