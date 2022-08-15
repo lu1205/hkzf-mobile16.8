@@ -12,6 +12,7 @@ import {API} from "../../utils/api";
 import {Link} from "react-router-dom";
 import {Toast} from "antd-mobile";
 import {BASE_URL} from '../../utils/url'
+import HouseItem from "../../components/HouseItem";
 
 // 覆盖物样式
 const labelStyle = {
@@ -242,7 +243,16 @@ export default class Map extends React.Component {
 
     renderHousesList() {
         return this.state.houseList.map(item => (
-                <div className={style.house} key={item.houseCode}>
+            <HouseItem
+            key={item.houseCode}
+            src={BASE_URL+item.houseImg}
+            title={item.title}
+            desc={item.desc}
+            tags={item.tags}
+            price={item.price}
+            />
+
+/*                <div className={style.house} key={item.houseCode}>
                     <div className={style.imgWrap}>
                         <img
                             className={style.img}
@@ -253,7 +263,7 @@ export default class Map extends React.Component {
                         <h3 className={style.title}>{item.title}</h3>
                         <div className={style.desc}>{item.desc}</div>
                         <div>
-                            {/* ['近地铁', '随时看房'] */}
+                            {/!* ['近地铁', '随时看房'] *!/}
                             {
                                 item.tags.map((tag, index) => {
                                         const tagClass = 'tag' + (index + 1)
@@ -271,7 +281,7 @@ export default class Map extends React.Component {
                             <span className={style.priceNum}>{item.price}</span> 元/月
                         </div>
                     </div>
-                </div>
+                </div>*/
             )
         )
 

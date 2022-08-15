@@ -77,7 +77,7 @@ export default class Filter extends React.Component {
     onCancel = (type) => {
         console.log(type)
         // 设置选中项为默认时，标题不高亮
-        const {titleSelectedStatus,selectedValue} = this.state
+        const {titleSelectedStatus, selectedValue} = this.state
         let newTitleSelectedStatus = {...titleSelectedStatus}
         let value = selectedValue[type]
         if (type === 'area' && (value[0] !== 'area' || value.length !== 2)) {
@@ -123,6 +123,31 @@ export default class Filter extends React.Component {
         } else if (type === 'more' && value.length === 0) {
             newTitleSelectedStatus[type] = false
         }*/
+
+        const newSelectedValues = {
+            ...this.state.selectedValue,
+            [type]: value
+        }
+        const {area, mode,price,more} = newSelectedValues
+
+        const filters = {}
+
+        const areaKey = area[0]
+
+        let areaValue = 'null'
+
+        if (area.length === 3) {
+            areaValue = area[2] !== 'null' ? area[2] : area[1]
+        }
+        filters[areaKey] = areaValue
+
+        filters.mode = mode[0]
+        filters.price = price[0]
+        filters.more = more.join(',')
+
+        console.log(newSelectedValues)
+
+        this.props.onFilters(filters)
 
         this.setState({
             openType: '',
