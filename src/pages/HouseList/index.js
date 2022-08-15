@@ -14,7 +14,6 @@ const {label, value} = JSON.parse(localStorage.getItem('hkzf_city'));
 
 
 export default class HouseList extends React.Component {
-
     state = {
         list: [],
         count: 0,
