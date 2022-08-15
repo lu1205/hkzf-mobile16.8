@@ -81,7 +81,7 @@ export default class HouseList extends React.Component {
                 <div className={styles.houseItems}>
                     <List
                         width={300}
-                        height={300}
+                        height={500}
                         rowCount={this.state.count}
                         rowHeight={120}
                         rowRenderer={this.renderHouseList}
