@@ -128,7 +128,7 @@ export default class Filter extends React.Component {
             ...this.state.selectedValue,
             [type]: value
         }
-        const {area, mode,price,more} = newSelectedValues
+        const {area, mode, price, more} = newSelectedValues
 
         const filters = {}
 
