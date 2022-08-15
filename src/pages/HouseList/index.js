@@ -75,6 +75,7 @@ export default class HouseList extends React.Component {
                     }}/>
                     <SearchHeader cityName={label} className={styles.searchHeader}/>
                 </Flex>
+
                 <Filter onFilters={this.onFilter}/>
 
                 <div className={styles.houseItems}>
