@@ -30,6 +30,7 @@ export default class HouseList extends React.Component {
         this.filters = filters
         await this.searchHouseList()
     }
+
     searchHouseList = async (data) => {
         const res = await API.get('/houses', {
             params: {
