@@ -53,7 +53,6 @@ export default class HouseList extends React.Component {
         const {list} = this.state
         const house = list[index]
         console.log('house', house)
-
         return (
             <HouseItem
                 key={key}
