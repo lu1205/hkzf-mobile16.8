@@ -22,3 +22,6 @@ ul {
 html, body, #root, .App {
     height: 100%;
 }
+.body-fixed {
+    overflow: hidden;
+}

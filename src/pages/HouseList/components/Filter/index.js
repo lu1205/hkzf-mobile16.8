@@ -38,11 +38,14 @@ export default class Filter extends React.Component {
         })
     }
 
-    async componentDidMount() {
-        await this.getFiltersData()
+    componentDidMount() {
+        this.htmlBody = document.body
+        this.getFiltersData()
     }
 
     onTitleClick = (type) => {
+        this.htmlBody.className = 'body-fixed'
+
         const {titleSelectedStatus, selectedValue} = this.state
         let newTitleSelectedStatus = {...titleSelectedStatus}
         Object.keys(titleSelectedStatus).forEach(key => {
@@ -75,6 +78,8 @@ export default class Filter extends React.Component {
     }
 
     onCancel = (type) => {
+        this.htmlBody.className = ''
+
         console.log(type)
         // 设置选中项为默认时，标题不高亮
         const {titleSelectedStatus, selectedValue} = this.state
@@ -99,6 +104,8 @@ export default class Filter extends React.Component {
     }
 
     onSave = (type, value) => {
+        this.htmlBody.className = ''
+
         console.log(type, value)
         // 设置选中项为默认时，标题不高亮
         const {titleSelectedStatus} = this.state
