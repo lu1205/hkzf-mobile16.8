@@ -6,6 +6,8 @@ import FilterTitle from "../FilterTitle";
 import FilterPicker from "../FilterPicker";
 import FilterMore from "../FilterMore";
 import {API} from "../../../../utils/api";
+import {Spring} from "react-spring/renderprops-universal";
+
 
 const titleSelectedStatus = {
     area: false,
@@ -226,15 +228,30 @@ export default class Filter extends React.Component {
         />
     }
 
+    renderMask = () => {
+        const {openType} = this.state
+        const isHide = openType === 'more' || openType === ''
+        return <Spring from={{opacity: 0}} to={{opacity: isHide ? 0 : 1}}>
+            {
+                props => {
+                    return props.opacity === 0
+                        ? null
+                        : <div
+                            style={props} className={styles.mask}
+                            onClick={() => this.onCancel(openType)}
+                        />
+                }
+            }
+        </Spring>
+    }
+
     render() {
-        const {titleSelectedStatus, openType} = this.state
+        const {titleSelectedStatus} = this.state
         return (
             <div className={styles.root}>
                 {/* 前三个菜单的遮罩层 */}
                 {
-                    (openType === 'area' || openType === 'mode' || openType === 'price')
-                        ? <div className={styles.mask} onClick={() => this.onCancel(openType)}></div>
-                        : null
+                    this.renderMask()
                 }
 
                 <div className={styles.content}>
@@ -245,9 +262,7 @@ export default class Filter extends React.Component {
                     {this.renderFilterPicker()}
 
                     {/* 最后一个菜单对应的内容： */}
-                    {
-                        this.renderFilterMore()
-                    }
+                    {this.renderFilterMore()}
                 </div>
             </div>
         )
