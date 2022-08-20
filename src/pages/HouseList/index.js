@@ -3,8 +3,6 @@ import SearchHeader from "../../components/SearchHeader";
 import {Flex, Toast} from "antd-mobile";
 import Sticky from "../../components/Sticky";
 
-import styles from './index.module.css'
-
 import Filter from "./components/Filter";
 import {API} from "../../utils/api";
 import {List, WindowScroller, AutoSizer, InfiniteLoader} from "react-virtualized";
@@ -12,6 +10,8 @@ import HouseItem from "../../components/HouseItem";
 import {BASE_URL} from "../../utils/url";
 import NoHouse from "../../components/NoHouse";
 import {getCurrentCity} from "../../utils";
+
+import styles from './index.module.css'
 
 //  切换路由是不会重新执行
 // const {label, value} = JSON.parse(localStorage.getItem('hkzf_city'));
@@ -34,14 +34,7 @@ export default class HouseList extends React.Component {
         await this.searchHouseList()
     }
 
-    onFilter = async (filters) => {
-        // 返回页面顶部
-        window.scrollTo(0, 0)
-        this.filters = filters
-        await this.searchHouseList()
-    }
-
-    searchHouseList = async (data) => {
+    searchHouseList = async () => {
         this.setState({
             isLoading: true
         })
@@ -66,6 +59,13 @@ export default class HouseList extends React.Component {
         })
     }
 
+    onFilter = async (filters) => {
+        // 返回页面顶部
+        window.scrollTo(0, 0)
+        this.filters = filters
+        await this.searchHouseList()
+    }
+
     // 渲染列表项的每一行
     renderHouseList = ({key, index, style,}) => {
         const {list} = this.state
@@ -88,7 +88,7 @@ export default class HouseList extends React.Component {
                 desc={house.desc}
                 tags={house.tags}
                 price={house.price}
-                onClick={()=>{
+                onClick={() => {
                     this.props.history.push(`/detail/${house.houseCode}`)
                 }}
             />
@@ -118,7 +118,7 @@ export default class HouseList extends React.Component {
     }
 
     renderList = () => {
-        const {count,isLoading} = this.state;
+        const {count, isLoading} = this.state;
         if (count === 0 && !isLoading) {
             return <NoHouse>没有找到房源，请您换一个搜索条件吧~</NoHouse>
         }
@@ -137,14 +137,14 @@ export default class HouseList extends React.Component {
                                     <List
                                         onRowsRendered={onRowsRendered}
                                         ref={registerChild}
-                                        isScrolling={isScrolling}
-                                        scrollTop={scrollTop}
                                         autoHeight
                                         width={width}
                                         height={height}
                                         rowCount={count}
                                         rowHeight={120}
                                         rowRenderer={this.renderHouseList}
+                                        isScrolling={isScrolling}
+                                        scrollTop={scrollTop}
                                     />
                                 )}
                             </AutoSizer>
@@ -152,16 +152,16 @@ export default class HouseList extends React.Component {
                     </WindowScroller>
                 )}
             </InfiniteLoader>
-        );
+        )
     }
 
     render() {
         return (
-            <div>
+            <div className={styles.root}>
                 <Flex className={styles.header}>
-                    <i className='iconfont icon-back' onClick={() => {
-                        this.props.history.go(-1)
-                    }}/>
+                    <i className='iconfont icon-back'
+                       onClick={() => this.props.history.go(-1)}
+                    />
                     <SearchHeader cityName={this.label} className={styles.searchHeader}/>
                 </Flex>
 
@@ -172,7 +172,6 @@ export default class HouseList extends React.Component {
                 <div className={styles.houseItems}>
                     {this.renderList()}
                 </div>
-
             </div>
         )
     }

@@ -1,13 +1,10 @@
 import React from "react";
-
-import styles from './index.module.css'
-
 import FilterTitle from "../FilterTitle";
 import FilterPicker from "../FilterPicker";
 import FilterMore from "../FilterMore";
 import {API} from "../../../../utils/api";
 import {Spring} from "react-spring/renderprops-universal";
-
+import styles from './index.module.css'
 
 const titleSelectedStatus = {
     area: false,
@@ -27,8 +24,24 @@ export default class Filter extends React.Component {
     state = {
         titleSelectedStatus,
         openType: '',
-        filtersData: {},
+        filtersData: {
+            // FilterMore
+            roomType: [],
+            oriented: [],
+            floor: [],
+            characteristic: [],
+            // FilterPicker
+            area: {},
+            subway: {},
+            rentType: [],
+            price: []
+        },
         selectedValue,
+    }
+
+    componentDidMount() {
+        this.htmlBody = document.body
+        this.getFiltersData()
     }
 
     async getFiltersData() {
@@ -38,11 +51,6 @@ export default class Filter extends React.Component {
         this.setState({
             filtersData: res.data.body
         })
-    }
-
-    componentDidMount() {
-        this.htmlBody = document.body
-        this.getFiltersData()
     }
 
     onTitleClick = (type) => {
