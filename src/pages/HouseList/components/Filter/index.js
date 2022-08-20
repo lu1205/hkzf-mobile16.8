@@ -75,6 +75,7 @@ export default class Filter extends React.Component {
                 }
             }
         })
+
         this.setState((preState) => {
             return {
                 // titleSelectedStatus: {
