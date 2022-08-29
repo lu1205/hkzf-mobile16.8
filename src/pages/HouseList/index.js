@@ -1,15 +1,18 @@
 import React from "react";
-import SearchHeader from "../../components/SearchHeader";
-import {Flex, Toast} from "antd-mobile";
-import Sticky from "../../components/Sticky";
 
-import Filter from "./components/Filter";
-import {API} from "../../utils/api";
+import {Flex, Toast} from "antd-mobile";
+
 import {List, WindowScroller, AutoSizer, InfiniteLoader} from "react-virtualized";
-import HouseItem from "../../components/HouseItem";
+
+import {API} from "../../utils/api";
 import {BASE_URL} from "../../utils/url";
-import NoHouse from "../../components/NoHouse";
 import {getCurrentCity} from "../../utils";
+
+import SearchHeader from "../../components/SearchHeader";
+import Sticky from "../../components/Sticky";
+import Filter from "./components/Filter";
+import HouseItem from "../../components/HouseItem";
+import NoHouse from "../../components/NoHouse";
 
 import styles from './index.module.css'
 
@@ -67,7 +70,7 @@ export default class HouseList extends React.Component {
     }
 
     // 渲染列表项的每一行
-    renderHouseList = ({key, index, style,}) => {
+    renderHouseList = ({key, index, style}) => {
         const {list} = this.state
         const house = list[index]
 
@@ -128,6 +131,7 @@ export default class HouseList extends React.Component {
                 isRowLoaded={this.isRowLoaded}
                 loadMoreRows={this.loadMoreRows}
                 rowCount={count}
+                threshold={10}
             >
                 {({onRowsRendered, registerChild}) => (
                     <WindowScroller>

@@ -1,27 +1,27 @@
 import React from "react";
-import style from "../../pages/Map/index.module.css";
 import PropTypes from "prop-types";
+import styles from "../../pages/Map/index.module.css";
 
-function HouseItem({src, title, desc, tags, price, onClick}) {
+function HouseItem({src, title, desc, tags, price, onClick, style}) {
 
     return (
-        <div className={style.house} onClick={onClick}>
-            <div className={style.imgWrap}>
+        <div className={styles.house} onClick={onClick} style={style}>
+            <div className={styles.imgWrap}>
                 <img
-                    className={style.img}
+                    className={styles.img}
                     src={src}
                     alt=""/>
             </div>
-            <div className={style.content}>
-                <h3 className={style.title}>{title}</h3>
-                <div className={style.desc}>{desc}</div>
+            <div className={styles.content}>
+                <h3 className={styles.title}>{title}</h3>
+                <div className={styles.desc}>{desc}</div>
                 <div>
                     {/* ['近地铁', '随时看房'] */}
                     {
                         tags.map((tag, index) => {
                                 const tagClass = 'tag' + (index + 1)
                                 return (
-                                    <span className={[style.tag, style[tagClass]].join(' ')}
+                                    <span className={[styles.tag, styles[tagClass]].join(' ')}
                                           key={tag}>
                                         {tag}
                                     </span>
@@ -30,8 +30,8 @@ function HouseItem({src, title, desc, tags, price, onClick}) {
                         )
                     }
                 </div>
-                <div className={style.price}>
-                    <span className={style.priceNum}>{price}</span> 元/月
+                <div className={styles.price}>
+                    <span className={styles.priceNum}>{price}</span> 元/月
                 </div>
             </div>
         </div>
