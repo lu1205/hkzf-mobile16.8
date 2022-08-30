@@ -40,7 +40,7 @@ export default class Home extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(prevProps, prevState, snapshot)
+        // console.log(prevProps, prevState, snapshot)
         // 比较前后两次的路由是否相同，如果不同，更新当前的路由，使得对应Tabbar高亮
         if (prevProps.location.pathname !== this.props.location.pathname) {
             this.setState({

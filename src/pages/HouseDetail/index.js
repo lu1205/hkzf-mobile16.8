@@ -111,7 +111,7 @@ export default class HouseDetail extends Component {
         this.getHouseDetail()
 
         // 检查房源是否收藏
-        // this.checkFavorite()
+        this.checkFavorite()
     }
 
     // 检查房源是否收藏：
@@ -445,8 +445,8 @@ export default class HouseDetail extends Component {
                             alt="收藏"
                         />
                         <span className={styles.favorite}>
-              {isFavorite ? '已收藏' : '收藏'}
-            </span>
+                            {isFavorite ? '已收藏' : '收藏'}
+                        </span>
                     </Flex.Item>
                     <Flex.Item>在线咨询</Flex.Item>
                     <Flex.Item>

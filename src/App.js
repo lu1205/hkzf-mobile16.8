@@ -7,6 +7,10 @@ import CityList from "./pages/CityList";
 import Map from "./pages/Map";
 import HouseDetail from "./pages/HouseDetail";
 import Login from './pages/Login'
+import AuthRoute from "./components/AuthRoute";
+import Rent from './pages/rent'
+import RentAdd from './pages/rent/Add'
+import RentSearch from './pages/rent/Search'
 
 function App() {
     return (
@@ -17,9 +21,13 @@ function App() {
                 <Route path="/home" component={Home}></Route>
                 <Route path="/cityList" component={CityList}></Route>
                 <Route path="/map" component={Map}></Route>
-                <Route path="/detail/:id" component={HouseDetail}></Route>
 
+                {/*<AuthRoute path='/map' component={Map} />*/}
+                <Route path="/detail/:id" component={HouseDetail}></Route>
                 <Route path="/login" component={Login}></Route>
+                <AuthRoute exact path='/rent' component={Rent} />
+                <AuthRoute path='/rent/add' component={RentAdd} />
+                <AuthRoute path='/rent/search' component={RentSearch} />
             </div>
         </Router>
     )

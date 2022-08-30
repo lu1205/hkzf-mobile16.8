@@ -70,7 +70,7 @@ class Login extends Component {
                                 className={styles.input}
                                 name='username'
                                 placeholder='请输入账号'
-                                />
+                            />
                         </div>
                         <ErrorMessage className={styles.error} name='username' component='div'></ErrorMessage>
                         <div className={styles.formItem}>
@@ -87,7 +87,7 @@ class Login extends Component {
                             <button className={styles.submit} type='submit'>登录</button>
                         </div>
                     </Form>
-{/*                    <form onSubmit={handleSubmit}>
+                    {/*                    <form onSubmit={handleSubmit}>
                         <div className={styles.formItem}>
                             <input
                                 value={values.username}
@@ -151,10 +151,14 @@ Login = withFormik({
         const {username, password} = values
 
         const res = await API.post('/user/login', {username: username, password: password});
-        console.log(res)
         if (res.data.status === 200) {
             localStorage.setItem('hkzf_token', res.data.body.token)
-            props.history.go(-1)
+            console.log(11, props)
+            if (!props.location.state) {
+                props.history.go(-1);
+            } else {
+                props.history.replace(props.location.state.from.pathname)
+            }
         } else {
             Toast.info(res.data.description, 2, null, false)
         }
