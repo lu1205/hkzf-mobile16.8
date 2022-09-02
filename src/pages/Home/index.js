@@ -1,13 +1,17 @@
-import React from "react";
+import React, {lazy} from "react";
 import {Route} from "react-router-dom";
 
-import "./index.css"
-
-import Index from "../Index";
-import HouseList from "../HouseList";
-import News from "../News";
-import Profile from "../Profile";
 import {TabBar} from 'antd-mobile';
+
+import "./index.css"
+import Index from "../Index";
+// import HouseList from "../HouseList";
+// import News from "../News";
+// import Profile from "../Profile";
+
+const HouseList = lazy(() => import('../HouseList'));
+const News = lazy(() => import('../News'));
+const Profile = lazy(() => import('../Profile'));
 
 
 const tabItems = [
@@ -71,6 +75,7 @@ export default class Home extends React.Component {
         return (
             <div className="home">
                 <Route exact path="/home" component={Index}></Route>
+
                 <Route path="/home/list" component={HouseList}></Route>
                 <Route path="/home/news" component={News}></Route>
                 <Route path="/home/profile" component={Profile}></Route>
